@@ -43,7 +43,81 @@ function Elastic_interactive()
     Elastic_function(symbol)
 end
 
+function Show_Projects()
+    local nvimDataPath = vim.fn.stdpath('data')
+    local fileName = nvimDataPath .. "/dave-plug-projects"
+    local file = io.open(fileName, "r")
+    if file ~= nil then
+        local projectsArray = {}
+        io.input(file)
+        for line in io.lines() do
+            table.insert(projectsArray, line)
+        end
+        io.close(file)
+
+        vim.ui.select(projectsArray,{ nrompt = "selezionare un progetto" }, function (str)
+            if str ~= nil then
+                vim.cmd("cd " .. str)
+            end
+        end)
+    else
+        print("errore all'apertura del file " .. fileName)
+    end
+end
+
+function Add_Current_Working_Directory()
+    local nvimDataPath = vim.fn.stdpath('data')
+    local fileName = nvimDataPath .. "/dave-plug-projects"
+    local file = io.open(fileName, "a")
+    if file ~= nil then
+        io.output(file)
+        io.write(vim.fn.getcwd() .. "\n")
+        io.close(file)
+    else
+        print("errore all'apertura del file " .. fileName)
+    end
+end
+
+function Show_Files()
+    local nvimDataPath = vim.fn.stdpath('data')
+    local fileName = nvimDataPath .. "/dave-plug-files"
+    local file = io.open(fileName, "r")
+    if file ~= nil then
+        local projectsArray = {}
+        io.input(file)
+        for line in io.lines() do
+            table.insert(projectsArray, line)
+        end
+        io.close(file)
+
+        vim.ui.select(projectsArray,{ nrompt = "selezionare un file" }, function (str)
+            if str ~= nil then
+                vim.cmd("e " .. str)
+            end
+        end)
+    else
+        print("errore all'apertura del file " .. fileName)
+    end
+end
+
+function Add_Current_File()
+    local nvimDataPath = vim.fn.stdpath('data')
+    local fileName = nvimDataPath .. "/dave-plug-files"
+    local file = io.open(fileName, "a")
+    local bufnr = vim.api.nvim_win_get_buf(0)
+    if file ~= nil then
+        io.output(file)
+        io.write(vim.api.nvim_buf_get_name(bufnr) .. "\n")
+        io.close(file)
+    else
+        print("errore all'apertura del file " .. fileName)
+    end
+end
 return {
     Elastic_function = Elastic_function,
-    Elastic_interactive = Elastic_interactive
+    Elastic_interactive = Elastic_interactive,
+    Add_Current_Working_Directory = Add_Current_Working_Directory,
+    Show_Projects = Show_Projects,
+    Add_Current_File = Add_Current_File,
+    Show_Files = Show_Files,
 }
