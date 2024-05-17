@@ -122,4 +122,8 @@ vim.api.nvim_create_user_command("ShowFiles", Show_Files, {nargs = 0})
 return {
     Elastic_function = Elastic_function,
     Elastic_interactive = Elastic_interactive,
+    Add_Current_Working_Directory = Add_Current_Working_Directory,
+    Show_Projects = Show_Projects,
+    Add_Current_File = Add_Current_File,
+    Show_Files = Show_Files,
 }
