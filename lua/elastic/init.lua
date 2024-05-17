@@ -113,11 +113,13 @@ function Add_Current_File()
         print("errore all'apertura del file " .. fileName)
     end
 end
+
+vim.api.nvim_create_user_command("AddDirectory", Add_Current_Working_Directory, {nargs = 0})
+vim.api.nvim_create_user_command("ShowProjects", Show_Projects, {nargs = 0})
+vim.api.nvim_create_user_command("AddFile", Add_Current_File, {nargs = 0})
+vim.api.nvim_create_user_command("ShowFiles", Show_Files, {nargs = 0})
+
 return {
     Elastic_function = Elastic_function,
     Elastic_interactive = Elastic_interactive,
-    Add_Current_Working_Directory = Add_Current_Working_Directory,
-    Show_Projects = Show_Projects,
-    Add_Current_File = Add_Current_File,
-    Show_Files = Show_Files,
 }
